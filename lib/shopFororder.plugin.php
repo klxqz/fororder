@@ -12,4 +12,14 @@ class shopFororderPlugin extends shopPlugin {
         );
     }
 
+    public function frontendProduct($product) {
+        $view = wa()->getView();
+        $template_path = wa()->getAppPath('plugins/fororder/templates/FrontendProduct.html', 'shop');
+        $view->assign('product', $product);
+        $html = $view->fetch($template_path);
+        return array(
+            'cart' => $html
+        );
+    }
+
 }

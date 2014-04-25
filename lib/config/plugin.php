@@ -10,6 +10,7 @@ return array(
     'frontend' => true,
     'handlers' => array(
         'backend_product' => 'backendProduct',
+        'frontend_product' => 'frontendProduct',
     ),
 );
 //EOF
