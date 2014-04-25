@@ -1,0 +1,28 @@
+<style>
+    .fororder{
+        display: none;
+    }
+    table.zebra.s-product-skus td input{
+        max-width:200px;
+    }
+    #fororder-loading{
+        display: inline-block;
+    }
+    #s-fororder-save-product{
+        margin-left: 10px;
+    }
+</style>
+<div class="fororder">
+    {foreach $product->skus as $sku}
+    <div data-id="{$sku.id}">
+        <div class="s-fororder">
+            <input class="fororder-input" type="hidden" name="skus[{$sku.id}][fororder]" data-sku-id="{$sku.id}" value="0" />
+            <input class="fororder-input" {if $sku.fororder}checked="checked"{/if} title="Товар под заказ" type="checkbox" name="skus[{$sku.id}][fororder]" data-sku-id="{$sku.id}" value="1" />
+            <input class="fororder-input" type="text" placeholder="дата поступления" disabled="disabled" name="skus[{$sku.id}][fororder_date]" data-sku-id="{$sku.id}" value="{$sku.fororder_date|escape}" />
+        </div>
+
+    </div>
+    {/foreach}
+</div>
+
+<script type="text/javascript" src="{$wa_app_static_url}plugins/fororder/js/fororder.js?{$wa->version()}"></script>
