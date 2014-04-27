@@ -22,4 +22,20 @@ class shopFororderPlugin extends shopPlugin {
         );
     }
 
+    public function frontendCart() {
+        $model = new shopProductSkusModel();
+        $view = wa()->getView();
+        if (isset($view->smarty->tpl_vars['cart'])) {
+            $tpl_var = &$view->smarty->tpl_vars['cart'];
+            $value = &$tpl_var->value;
+            foreach ($value['items'] as &$item) {
+                $sku_id = $item['sku_id'];
+                $sku = $model->getById($sku_id);
+                if (($sku['count'] === '0' || $sku['count'] < 0 ) && $sku['fororder']) {
+                    $item['sku_name'] .= '(Под заказ' . ($sku['fororder_date'] ? ' ' . $sku['fororder_date'] : '') . ')';
+                }
+            }
+        }
+    }
+
 }

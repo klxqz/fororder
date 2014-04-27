@@ -1,1 +1,56 @@
-Товар под заказ
+<style>
+    .fororder_skus{
+        display: none;
+    }
+    .fororder-message{
+        color: #ff0000;
+        font-weight: bold;
+    }
+</style>
+
+<ul class="fororder_skus">
+    {foreach $product.skus as $sku_id => $sku}
+        <li data-sku-id="{$sku_id}" data-fororder="{$sku.fororder}" data-fororder-date="{$sku.fororder_date}" data-count="{$sku.count}"></li>
+
+    {/foreach}
+</ul>
+
+<div class="fororder-message">Товар под заказ <span class="fororder-date"></span></div>
+
+<script>
+    $(function() {
+        function show_fororder(sku_id) {
+            var $sku = $('.fororder_skus li[data-sku-id=' + sku_id + ']');
+            if ($sku) {
+                if ($sku.data('fororder') && $sku.data('count') <= 0) {
+                    $('.fororder-date').text($sku.data('fororder-date'));
+                    $('.fororder-message').show();
+                } else {
+                    $('.fororder-message').hide();
+                }
+            } else {
+                $('.fororder-message').hide();
+            }
+        }
+
+        $("#product-skus input[type=radio]").click(function() {
+            var sku_id = $(this).val();
+            show_fororder(sku_id);
+        });
+
+        $("select.sku-feature").change(function() {
+            var key = "";
+            $("select.sku-feature").each(function() {
+                key += $(this).data('feature-id') + ':' + $(this).val() + ';';
+            });
+            var sku = sku_features[key];
+            if (sku) {
+                var sku_id = sku.id;
+                show_fororder(sku_id);
+            } else {
+                $('.fororder-message').hide();
+            }
+
+        });
+    })
+</script>

@@ -11,6 +11,7 @@ return array(
     'handlers' => array(
         'backend_product' => 'backendProduct',
         'frontend_product' => 'frontendProduct',
+        'frontend_cart' => 'frontendCart',
     ),
 );
 //EOF
